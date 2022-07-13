@@ -1,11 +1,3 @@
-//
-//  Screen.m
-//  Citronium
-//
-//  Created by Timofey Tatarinov on 16.09.14.
-//
-//
-
 #import "Screen.h"
 #import <notify.h>
 
@@ -21,24 +13,24 @@ UIBackgroundTaskIdentifier bgTask;
 
 - (void) init:(CDVInvokedUrlCommand*)command {
     // send to web view
-    
+
     UIApplication*    app = [UIApplication sharedApplication];
     dispatch_block_t expirationHandler;
     expirationHandler = ^{
         [app endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
-        
-        
+
+
         bgTask = [app beginBackgroundTaskWithExpirationHandler:expirationHandler];
     };
-    
+
     bgTask = [app beginBackgroundTaskWithExpirationHandler:expirationHandler];
-    
+
     notify_register_dispatch("com.apple.springboard.lockstate",
                              &notifyToken,
                              dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0l),
                              ^(int info) {
-                                 
+
                                  uint64_t state;
                                  notify_get_state(notifyToken, &state);
                                  if (state == 1) {
@@ -55,7 +47,7 @@ UIBackgroundTaskIdentifier bgTask;
                                  NSLog(@"Cur state is %llu", state);
                                  self.screenStatus = state;
                              });
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         while (1) {
             sleep(100);
@@ -65,14 +57,14 @@ UIBackgroundTaskIdentifier bgTask;
 
 - (void)getScreenStatus:(CDVInvokedUrlCommand *)command
 {
-    
+
     self.callbackId = command.callbackId;
-    
+
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%d", self.screenStatus]];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
-    
-    
+
+
 }
 
 @end

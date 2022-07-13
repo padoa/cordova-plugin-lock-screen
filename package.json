@@ -1,0 +1,31 @@
+{
+  "name": "cordova-plugin-lock-screen",
+  "version": "1.0",
+  "description": "A cordova plugin providing an API to observe iPadOS lock/unlock events",
+  "cordova": {
+    "id": "cordova-plugin-lock-screen",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/padoa/cordova-plugin-lock-screen.git"
+  },
+  "keywords": [
+    "opentok",
+    "ecosystem:cordova",
+    "cordova-android",
+    "padoa"
+  ],
+  "author": "Padoa - previsit team",
+  "license": "Apache 2.0 License",
+  "bugs": {
+    "url": "https://github.com/padoa/cordova-plugin-lock-screen/issues"
+  },
+  "homepage": "https://github.com/padoa/cordova-plugin-lock-screen#readme"
+}

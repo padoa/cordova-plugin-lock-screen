@@ -1,11 +1,3 @@
-//
-//  Screen.h
-//  Citronium
-//
-//  Created by Timofey Tatarinov on 16.09.14.
-//
-//
-
 #import <Cordova/CDVPlugin.h>
 
 @interface Screen : CDVPlugin

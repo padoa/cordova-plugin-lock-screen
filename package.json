@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-lock-screen",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A cordova plugin providing an API to observe iPadOS lock/unlock events",
   "cordova": {
     "id": "cordova-plugin-lock-screen",

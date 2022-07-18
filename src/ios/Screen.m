@@ -34,17 +34,13 @@ UIBackgroundTaskIdentifier bgTask;
                                  uint64_t state;
                                  notify_get_state(notifyToken, &state);
                                  if (state == 1) {
-                                     dispatch_sync(dispatch_get_main_queue(), ^{
-                                         NSString *jsStatement = [NSString stringWithFormat:@"Screen.screenoff(%.0f);", [[NSDate date] timeIntervalSince1970] * 1000];
-                                         [self.webView  stringByEvaluatingJavaScriptFromString:jsStatement];
-                                     });
+                                     NSString *jsStatement = [NSString stringWithFormat:@"Screen.screenoff(%.0f);", [[NSDate date] timeIntervalSince1970] * 1000];
+                                     [self.webView performSelectorOnMainThread:@selector(evaluateJavaScript:completionHandler:) withObject:jsStatement waitUntilDone:NO];
                                  } else {
-                                     dispatch_sync(dispatch_get_main_queue(), ^{
-                                         NSString *jsStatement = [NSString stringWithFormat:@"Screen.screenon(%.0f);", [[NSDate date] timeIntervalSince1970] * 1000];
-                                         [self.webView  stringByEvaluatingJavaScriptFromString:jsStatement];
-                                     });
+                                     NSString *jsStatement = [NSString stringWithFormat:@"Screen.screenon(%.0f);", [[NSDate date] timeIntervalSince1970] * 1000];
+                                     [self.webView performSelectorOnMainThread:@selector(evaluateJavaScript:completionHandler:) withObject:jsStatement waitUntilDone:NO];
                                  }
-                                 NSLog(@"Cur state is %llu", state);
+                                 NSLog(@"Current state is %llu", state);
                                  self.screenStatus = state;
                              });
 
@@ -61,7 +57,7 @@ UIBackgroundTaskIdentifier bgTask;
     self.callbackId = command.callbackId;
 
     CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%d", self.screenStatus]];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%ld", self.screenStatus]];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 
 
